@@ -38,3 +38,35 @@ exports.user_signup = async (req, res) => {
     });
   }
 };
+
+exports.login = async (req, res) => {
+  try {
+    const is_email_empty = helper.is_empty(req.body.email.trim());
+    const is_password_empty = helper.is_empty(req.body.password.trim());
+  
+    if (is_email_empty || is_password_empty) {
+      response_handler.set_failure_response({
+        request: req,
+        response: res,
+        statusCode: 422,
+        message: "Missing required parameters.",
+      });
+      return;
+    }
+
+    const log_data = await user_service.login(req.body);
+    response_handler.set_success_response_and_save_activities({
+      request: req,
+      response: res,
+      data: log_data,
+      statusCode: 201,
+      message: "Logged in successfully!",
+    });
+  } catch (error) {
+    error_handler.handle_controller_error({
+      request: req,
+      response: res,
+      error: error,
+    });
+  }
+};

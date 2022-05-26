@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"first_name\": \"Yogessh\",\r\n    \"last_name\": \"Raj\",\r\n    \"mobile\": \"8124476830\",\r\n    \"email\" : \"yogesshraj@gmail.com\",\r\n    \"address\": \"30, Thiruvalluvar st, Veturnimadam, Nagercoil\"\r\n}",
+					"raw": "{\r\n    \"first_name\": \"Yogessh\",\r\n    \"last_name\": \"Raj\",\r\n    \"mobile\": \"8124476830\",\r\n    \"email\" : \"yosgesshraj@gmail.com\",\r\n    \"address\": \"30, Thiruvalluvar st, Veturnimadam, Nagercoil\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -27,6 +27,32 @@
 					],
 					"path": [
 						"user-signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"yosgesshraj@gmail.com\",\r\n    \"password\" : \"IHHZgc6z7i\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"login"
 					]
 				}
 			},
