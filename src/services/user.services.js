@@ -5,6 +5,7 @@ var bcrypt = require("bcryptjs");
 var error_handler = require("../utilities/error_handler");
 const authorization_handler = require('../utilities/authorization_handler');
 const validator = require("email-validator");
+const Op = require('sequelize').Op;
 
 
 module.exports.user_signup = async (request_body) => {
@@ -32,21 +33,40 @@ module.exports.user_signup = async (request_body) => {
     }
   };
 
-const validation_email_signup_checkup = async (request_body) => {
+const validation_email_signup_checkup = async (request_body, is_update) => {
   try {
     if (!is_empty(request_body.email.trim())) {
       var email_validation = validator.validate(request_body.email.trim());
       if (!email_validation) {
         throw new Error("This email address is not valid!");
       }
-      const user_checkup = await User.count({
-        where: { email: request_body.email.trim(), is_active: true },
-      });
-      if (user_checkup) {
-        {
-        throw new Error("User with this email already exists!");
+      if(is_update) {
+        const user_checkup = await User.count({
+          where: { 
+            email: request_body.user_id.trim(), 
+            is_active: true,
+            [Op.not] : [{id : request_body.user_id}]
+         },
+        });
+
+        if (user_checkup) {
+          {
+          throw new Error("User with this email already exists!");
+          }
+        }
+      } else {
+        const user_checkup = await User.count({
+          where: { email: request_body.email.trim(), is_active: true },
+        });
+
+        if (user_checkup) {
+          {
+          throw new Error("User with this email already exists!");
+          }
         }
       }
+      
+      
     }
   } catch (error) {
     return error_handler.throw_service_error(
@@ -105,3 +125,54 @@ module.exports.login = async (request_body) => {
     );
   }
 };
+
+module.exports.update = async (request) => {
+  try {
+    const user = await User.findOne({
+      where: { email: request.user.email.trim(), is_active: true },
+    });
+    if(!user){
+      throw new Error("User not found!");
+    }
+
+    await validation_email_signup_checkup(request.user, true);
+
+    var updates = get_updates(user, request.user);
+
+    let is_updated = await User.update(updates,
+      {
+        where : {
+          id: request.user.user_id,
+          is_active: true,
+        }
+      }
+    );
+
+    if(is_updated[0]) {
+      const updated_user = await User.findOne({
+        where: { id: request.user.user_id, is_active: true },
+      });
+      return updated_user;
+    } else {
+      throw Error("Not updated properly!")
+    }
+
+  } catch (error) {
+    return error_handler.throw_service_error(
+      error,
+      "Problem encountered while login!"
+    );
+  }
+};
+
+const get_updates = (user, request_user) => {
+  const updates = {
+    first_name: request_user.first_name ? request_user.first_name: user.first_name,
+    last_name: request_user.last_name ? request_user.last_name: user.last_name,
+    email: request_user.email ? request_user.email: user.email,
+    mobile: request_user.mobile ? request_user.mobile: user.mobile,
+    address: request_user.address ? request_user.address: user.address,
+  }
+
+  return updates;
+}

@@ -70,3 +70,23 @@ exports.login = async (req, res) => {
     });
   }
 };
+
+exports.update = async (req, res) => {
+  try {
+
+    const log_data = await user_service.update(req);
+    response_handler.set_success_response_and_save_activities({
+      request: req,
+      response: res,
+      data: log_data,
+      statusCode: 201,
+      message: "User updated successfully!",
+    });
+  } catch (error) {
+    error_handler.handle_controller_error({
+      request: req,
+      response: res,
+      error: error,
+    });
+  }
+};
