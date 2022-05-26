@@ -1,0 +1,36 @@
+{
+	"info": {
+		"_postman_id": "11d52a09-8cd8-4b7a-a4d6-243d0eb358c2",
+		"name": "Aexonic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13360915"
+	},
+	"item": [
+		{
+			"name": "Add user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"Yogessh\",\r\n    \"last_name\": \"Raj\",\r\n    \"mobile\": \"8124476830\",\r\n    \"email\" : \"yogesshraj@gmail.com\",\r\n    \"address\": \"30, Thiruvalluvar st, Veturnimadam, Nagercoil\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user-signup",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user-signup"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

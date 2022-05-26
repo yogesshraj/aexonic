@@ -36,7 +36,7 @@ exports.set_middlewares = () => {
 module.exports.set_routes = () => {
     return new Promise((resolve, reject) => {
         try {
-        // require("./routes/login.routes")(app);
+        require("./routes/user.routes")(app);
         // require("./routes/agent.routes")(app);
         //Set the base route
         app.get("/api/v1/", (req, res) => {

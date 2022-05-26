@@ -11,7 +11,7 @@ const schema = {
 
   first_name: { type: Sequelize.STRING(50), allowNull: false },
   last_name: { type: Sequelize.STRING(50), allowNull: false },
-  email: { type: Sequelize.STRING(15), allowNull: false },
+  email: { type: Sequelize.STRING(50), allowNull: false },
   password: { type: Sequelize.STRING(256), allowNull: false },
   mobile: { type: Sequelize.STRING(15), allowNull: false },
   address: { type: Sequelize.STRING(256), allowNull: false },
