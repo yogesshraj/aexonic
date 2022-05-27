@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "11d52a09-8cd8-4b7a-a4d6-243d0eb358c2",
+		"name": "Aexonic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13360915"
+	},
+	"item": [
+		{
+			"name": "Add user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"\r",
+							"    var jsonRespData = pm.response.json();\r",
+							"    pm.environment.set(\"USER_ROLE_JWT\", jsonRespData.data.token);\r",
+							"\r",
+							"}\r",
+							"catch (error) {\r",
+							"    console.log(error.message);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"Yogessh\",\r\n    \"last_name\": \"R L\",\r\n    \"mobile\": \"8124476830\",\r\n    \"email\" : \"yogessh@gmail.com\",\r\n    \"address\": \"30, Thiruvalluvar st, Veturnimadam, Nagercoil\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user-signup",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user-signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"yogessh@gmail.com\",\r\n    \"password\" : \"L7cirPGDRT\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"\r",
+							"    var jsonRespData = pm.response.json();\r",
+							"    pm.environment.set(\"USER_ROLE_JWT\", jsonRespData.data.token);\r",
+							"\r",
+							"}\r",
+							"catch (error) {\r",
+							"    console.log(error.message);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{USER_ROLE_JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mobile\" : \"9384340745\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/update",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/get-all?items_per_page=2&page=1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"get-all"
+					],
+					"query": [
+						{
+							"key": "items_per_page",
+							"value": "2"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/get-all?items_per_page=2&page=1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"get-all"
+					],
+					"query": [
+						{
+							"key": "items_per_page",
+							"value": "2"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "email",
+							"value": "jo",
+							"disabled": true
+						},
+						{
+							"key": "contact_name",
+							"value": "R L",
+							"disabled": true
+						},
+						{
+							"key": "mobile",
+							"value": "19",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
