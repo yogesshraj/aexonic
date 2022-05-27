@@ -90,3 +90,39 @@ exports.update = async (req, res) => {
     });
   }
 };
+
+exports.get_all = async (req, res) => {
+  try {
+		var filter = get_search_filters(req);
+
+    const log_data = await user_service.get_all(filter);
+    response_handler.set_success_response_and_save_activities({
+      request: req,
+      response: res,
+      data: log_data,
+      statusCode: 201,
+      message: "User retrieved successfully!",
+    });
+  } catch (error) {
+    error_handler.handle_controller_error({
+      request: req,
+      response: res,
+      error: error,
+    });
+  }
+};
+
+function get_search_filters(req) {
+	var filter = {};
+	var items_per_page = req.query.items_per_page ? req.query.items_per_page : null;
+	var page = req.query.page ? req.query.page : null;
+
+	if (items_per_page != null) {
+		filter['items_per_page'] = items_per_page;
+	}
+	if (page != null) {
+		filter['page'] = page;
+	}
+	return filter;
+}
+

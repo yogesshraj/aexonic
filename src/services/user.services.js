@@ -117,6 +117,14 @@ module.exports.login = async (request_body) => {
       email: user.email,
     });
 
+    await User.update({token : access_token},
+      {
+        where: {
+          id : user.id
+        }
+      }
+    ) 
+
     return access_token;
   } catch (error) {
     return error_handler.throw_service_error(
@@ -165,6 +173,26 @@ module.exports.update = async (request) => {
   }
 };
 
+module.exports.get_all = async (filter) => {
+  try {
+
+    let objects = [];
+		let current_page = 0;
+		let total_pages = 0;
+
+    const users = await User.findAll();
+
+    ({ current_page, total_pages, objects } = paginate_users(filter, users));
+   
+    return { current_page, total_pages, objects };
+  } catch (error) {
+    return error_handler.throw_service_error(
+      error,
+      "Problem encountered while getting all users!"
+    );
+  }
+};
+
 const get_updates = (user, request_user) => {
   const updates = {
     first_name: request_user.first_name ? request_user.first_name: user.first_name,
@@ -175,4 +203,15 @@ const get_updates = (user, request_user) => {
   }
 
   return updates;
+}
+
+function paginate_users(filter, objects) {
+	if (filter.hasOwnProperty('page') && filter.hasOwnProperty('items_per_page')) {
+		var start_offset = (filter.page - 1) * filter.items_per_page;
+		var end_offset = filter.page * filter.items_per_page;
+		var current_page = filter.page ? +filter.page : 1;
+		var total_pages = Math.ceil(objects.length / parseInt(filter.items_per_page));
+		objects = objects.slice(start_offset, end_offset);
+	}
+	return { current_page, total_pages, objects };
 }

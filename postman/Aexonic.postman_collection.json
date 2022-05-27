@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"first_name\": \"Yogessh\",\r\n    \"last_name\": \"Raj\",\r\n    \"mobile\": \"8124476830\",\r\n    \"email\" : \"yosgesshraj@gmail.com\",\r\n    \"address\": \"30, Thiruvalluvar st, Veturnimadam, Nagercoil\"\r\n}",
+					"raw": "{\r\n    \"first_name\": \"Akshay\",\r\n    \"last_name\": \"R L\",\r\n    \"mobile\": \"848693694\",\r\n    \"email\" : \"akshay@gmail.com\",\r\n    \"address\": \"30, Thiruvalluvar st, Veturnimadam, Nagercoil\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -34,12 +34,31 @@
 		},
 		{
 			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"\r",
+							"    var jsonRespData = pm.response.json();\r",
+							"    pm.environment.set(\"USER_ROLE_JWT\", jsonRespData.data);\r",
+							"\r",
+							"}\r",
+							"catch (error) {\r",
+							"    console.log(error.message);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\" : \"yosgesshraj@gmail.com\",\r\n    \"password\" : \"IHHZgc6z7i\"\r\n}",
+					"raw": "{\r\n    \"email\" : \"thaman@gmail.com\",\r\n    \"password\" : \"jeW3iSPshq\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -53,6 +72,92 @@
 					],
 					"path": [
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{USER_ROLE_JWT}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"yogesshraj@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/update",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/get-all?items_per_page=2&page=2",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"get-all"
+					],
+					"query": [
+						{
+							"key": "items_per_page",
+							"value": "2"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
 					]
 				}
 			},
