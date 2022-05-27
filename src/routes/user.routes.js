@@ -8,6 +8,7 @@ module.exports = (app) => {
   router.post('/login', controller.login);
   router.put('/update', authenticate, controller.update);
   router.get('/get-all', controller.get_all);
+  router.get('/search-users', controller.get_all);
   
 
   app.use("/api/v1/", router);

@@ -73,7 +73,6 @@ exports.login = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-
     const log_data = await user_service.update(req);
     response_handler.set_success_response_and_save_activities({
       request: req,
@@ -115,6 +114,9 @@ exports.get_all = async (req, res) => {
 function get_search_filters(req) {
 	var filter = {};
 	var items_per_page = req.query.items_per_page ? req.query.items_per_page : null;
+	var contact_name = req.query.contact_name ? req.query.contact_name : null;
+	var email = req.query.email ? req.query.email : null;
+	var mobile = req.query.mobile ? req.query.mobile : null;
 	var page = req.query.page ? req.query.page : null;
 
 	if (items_per_page != null) {
@@ -122,6 +124,18 @@ function get_search_filters(req) {
 	}
 	if (page != null) {
 		filter['page'] = page;
+	}
+
+  if (contact_name != null) {
+		filter['contact_name'] = contact_name;
+	}
+
+  if (email != null) {
+		filter['email'] = email;
+	}
+
+  if (mobile != null) {
+		filter['mobile'] = mobile;
 	}
 	return filter;
 }
